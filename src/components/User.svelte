@@ -15,13 +15,19 @@
     return $bp === 'sm' ? urls.small :
       $bp === 'md' ? urls.medium : urls.large
   }
+
+  const getUserName = () => {
+    if (userInfos.first_name && userInfos.last_name)
+        return `${userInfos.first_name} ${userInfos.last_name}`
+    return userInfos.username
+  }
 </script>
 
 {#if mediaDetails && userInfos}
     <div id="user" class="relative sm:h-screen sm:w-full md:w-1/2 lg:w-1/3 flex pt-20 pb-10">
         <div class="sm:ml-auto sm:mr-2 sm:flex sm:flex-col sm:justify-between sm:h-screen w-full">
             <div class="w-full text-right pr-2">
-                <span>{userInfos.first_name} {userInfos.last_name}</span>
+                <span>{getUserName()}</span>
                 <img alt="Profile picture" src={getProfileImage(userInfos.profile_images)}
                      class="inline rounded-full w-16 h-16"/>
             </div>

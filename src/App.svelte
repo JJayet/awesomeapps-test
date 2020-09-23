@@ -21,7 +21,6 @@
   const loadNextPosts = async () => {
     const newPosts = await loadMorePosts()
     posts = [...posts, ...newPosts]
-    console.log(posts)
   }
 
   $: post = posts[currentlyDisplayedPost]
@@ -39,7 +38,6 @@
 
   onMount(async () => {
     posts = await loadPosts()
-    console.log(posts)
   })
 
 </script>

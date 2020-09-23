@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte'
+  import { beforeUpdate } from 'svelte'
 
   import { getMediaDetails } from '../stores/medias'
   import { getUserInfos } from '../stores/users'
@@ -9,19 +9,27 @@
 
   export let post
 
+
   let mediaDetails
   let userInfos
 
-  onMount(async () => {
+  const loadDatas = async (post) => {
     mediaDetails = await getMediaDetails(post.mediaId)
     userInfos = await getUserInfos(post.user.username)
-  })
+  }
+
+  $: {
+    loadDatas(post)
+  }
+
 </script>
 
-<div>
-    <Image mediaDetails={mediaDetails} />
-    <User mediaDetails={mediaDetails} userInfos={userInfos} post={post} />
-</div>
+{#if mediaDetails && userInfos}
+    <div>
+        <Image mediaDetails={mediaDetails}/>
+        <User mediaDetails={mediaDetails} userInfos={userInfos} post={post}/>
+    </div>
+{/if}
 
 <style>
     div {
