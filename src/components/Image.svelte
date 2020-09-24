@@ -5,7 +5,13 @@
 
   const bp = breakpoints()
 
+  const getBackgroundImage = (urls) => {
+    if (!urls) return 'page-not-found.png'
+    return urls.small
+  }
+
   const getImage = (urls) => {
+    if (!urls) return 'page-not-found.png'
     return $bp === 'sm' ? urls.small :
       $bp === 'md' ? urls.regular : urls.full
   }
@@ -13,7 +19,7 @@
 
 {#if mediaDetails}
     <div class="relative h-screen w-full md:w-1/2 lg:w-2/3 pt-5 md:pt-20 pb-10">
-        <div class="bg" style="background-image: url({mediaDetails.urls.small})"></div>
+        <div class="bg" style="background-image: url({getBackgroundImage(mediaDetails.urls)})"></div>
         <img class="object-contain" alt="Media picture" src={getImage(mediaDetails.urls)}>
     </div>
 {/if}

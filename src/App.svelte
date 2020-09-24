@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+  import { fade } from 'svelte/transition'
 
   import AppBar from 'smelte/src/components/AppBar'
   import Button from 'smelte/src/components/Button'
@@ -21,7 +22,6 @@
   const loadNextPosts = async () => {
     const newPosts = await loadMorePosts()
     posts = [...posts, ...newPosts]
-    console.log(posts)
   }
 
   $: post = posts[currentlyDisplayedPost]
@@ -39,7 +39,6 @@
 
   onMount(async () => {
     posts = await loadPosts()
-    console.log(posts)
   })
 
 </script>
@@ -63,9 +62,10 @@
         {$darkMode ? 'Disable' : 'Enable'} dark mode
     </Tooltip>
 </AppBar>
-<main transition:fade={{ duration: 300 }}>
+<main transition:fade>
     {#if !post}
-        <h2>We are currently loading our best content for you <span class="material-icons">favorite</span></h2>
+        <h2 class="mt-24 text-center">We are currently loading our best content for you <span class="material-icons">favorite</span>
+        </h2>
     {:else}
         <Post post={post}/>
     {/if}
